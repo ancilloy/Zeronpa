@@ -63,56 +63,11 @@
             <audio id="musicPlayer" loop="yes" src="musics/binary_game.mp3"></audio>
         </div>
         <table class="content" id="firstTab"></table>
+
         <script src="libs/papaparse.min.js"></script>
+        <script src="display.js"></script>
         <script>
-            let musicPlayer = document.getElementById("musicPlayer");
-            musicPlayer.volume = document.getElementById("volumeBar").value / 100;
-
-            function mute() {
-                if (musicPlayer.muted) {
-                    musicPlayer.muted = false;
-                    document.getElementById("muteButton").innerHTML = 'volume_up';
-                } else {
-                    musicPlayer.muted = true;
-                    document.getElementById("muteButton").innerHTML = 'volume_off';
-                }
-            }
-
-            function pause() {
-                if (musicPlayer.paused) {
-                    musicPlayer.play();
-                    document.getElementById("pauseButton").innerHTML = '<span class="material-symbols-outlined">pause</span>';
-                } else {
-                    musicPlayer.pause();
-                    document.getElementById("pauseButton").innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
-                }
-            }
-
-            function volumeChange(ev) {
-                console.log(this.value);
-                musicPlayer.volume = this.value / 100;
-            }
-            document.getElementById("volumeBar").addEventListener("change", volumeChange);
-
-            let currentTab = document.getElementById("firstTab");
-
-            Papa.parse("https://ancilloy.github.io/Zeronpa/scripts/test.csv", { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
-                if (res.data != null) {
-                    let x = res.data;
-                    let line = document.createElement("tr");
-
-                    let portraitCell = document.createElement("td");
-                    portraitCell.className = "portrait";
-                    portraitCell.innerHTML = `<img src="https://ancilloy.github.io/Zeronpa/portraits/${x.character}/${x.portrait}.png"><p>${x.name}</p>`;
-                    line.appendChild(portraitCell);
-
-                    let textCell = document.createElement("td");
-                    textCell.innerHTML = x.text;
-                    line.appendChild(textCell);
-
-                    currentTab.appendChild(line);
-                }
-            } });
+            displayScript("test");
         </script>
     </body>
 </html>
