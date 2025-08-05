@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Zeronpa</title>
+
+        <style>
+            body {
+                background-color: gray;
+                color: white;
+                font-family: Helvetica, Arial, sans-serif;
+            }
+
+            table.content {
+                border: 1px solid black;
+                border-collapse: collapse;
+                margin: auto;
+                width: 75%;
+            }
+
+            td {
+                border: 1px solid black;
+                padding: 10px;
+            }
+
+            td.portrait {
+                background-color: #474747;
+                text-align: center;
+                vertical-align: middle;
+                width: 110px;
+            }
+
+            td.portrait img {
+                width: 100px;
+                height: 100px;
+            }
+
+            td.portrait p {
+                font-weight: bold;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+    <body id="body">
+        <table class="content" id="firstTab"></table>
+        <script src="libs/papaparse.min.js"></script>
+        <script>
+            let currentTab = document.getElementById("firstTab");
+
+            Papa.parse("https://ancilloy.github.io/Zeronpa/scripts/test.csv", { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
+                if (res.data != null) {
+                    let x = res.data;
+                    let line = document.createElement("tr");
+
+                    let portraitCell = document.createElement("td");
+                    portraitCell.className = "portrait";
+                    portraitCell.innerHTML = `<img src="https://ancilloy.github.io/Zeronpa/portraits/${x.character}/${x.portrait}.png"><p>${x.name}</p>`;
+                    line.appendChild(portraitCell);
+
+                    let textCell = document.createElement("td");
+                    textCell.innerHTML = x.text;
+                    line.appendChild(textCell);
+
+                    currentTab.appendChild(line);
+
+                    console.log(x);
+                }
+            } });
+        </script>
+    </body>
+</html>
