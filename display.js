@@ -61,7 +61,7 @@ async function displayScript(scriptName) {
             // Some other characters have special base names, listed at the beginning of this file (example : zero -> Zero III)
             let name = (x.name!="") ? x.name : ( basenames[x.character]!=null ? basenames[x.character] : capitalize(x.character) );
             let portrait = (x.portrait!="") ? x.portrait : "stand"; // stand.png is the default portrait for each character.
-            let imgPath = (portrait=="none") ? "https://ancilloy.github.io/Zeronpa/portraits/none/none.png" : `https://ancilloy.github.io/Zeronpa/portraits/${x.character}/${portrait}.png`;
+            let imgPath = (portrait=="none") ? "https://ancilloy.github.io/Zeronpa/portraits/none/stand.png" : `https://ancilloy.github.io/Zeronpa/portraits/${x.character}/${portrait}.png`;
 
             let portraitCell = document.createElement("td");
             portraitCell.className = "portrait";
