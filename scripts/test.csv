@@ -1,4 +1,6 @@
 character,portrait,name,text
+cmd,decor,warehouseA,
+cmd,beginDialogue,,
 zero,smug,???,Stop everything !
 santa,shock,,Huh ?
 zero,stand,,Santa ! Get the banana !
@@ -8,3 +10,4 @@ k,stand,,I'm confused.
 june,worry,,Lorem ipsum.
 none,,,I’m the invisible man !
 santa,none,,"Hey, where did my portrait go !?"
+cmd,endDialogue,,
