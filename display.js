@@ -1,3 +1,16 @@
+let basenames = {
+    "zero"    : "Zero III",
+    "oldAkane": "Akane",
+    "none"    : ""
+};
+
+
+
+
+
+
+
+
 let musicPlayer = document.getElementById("musicPlayer");
 musicPlayer.volume = document.getElementById("volumeBar").value / 100;
 
@@ -31,23 +44,6 @@ document.getElementById("volumeBar").addEventListener("change", volumeChange);
 
 
 
-let basenames = {};
-
-async function loadBasenames() {
-    await Papa.parse("https://ancilloy.github.io/Zeronpa/basenames.csv", { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
-        if (res.data != null) {
-            let x = res.data;
-            basenames[x.character] = x.name;
-        }
-    } });
-    basenames.music = "yes";
-}
-
-
-
-
-
-
 function capitalize(mot) {
     return mot.charAt(0).toUpperCase() + mot.slice(1);
 }
@@ -55,10 +51,6 @@ function capitalize(mot) {
 let currentTab = document.getElementById("firstTab");
 
 async function displayScript(scriptName) {
-    if (basenames.music==null) {
-        await loadBasenames();
-    }
-
     Papa.parse(`https://ancilloy.github.io/Zeronpa/scripts/${scriptName}.csv`, { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
         if (res.data != null) {
             let x = res.data;
@@ -66,12 +58,14 @@ async function displayScript(scriptName) {
 
             // If a character has a special name for that line, it will be displayed.
             // If not, their base name will be displayed. For most characters, it is just their name in-code but with a capital.
-            // Some other characters have special base names, listed in basenames.csv (example : zero -> Zero III)
+            // Some other characters have special base names, listed at the beginning of this file (example : zero -> Zero III)
             let name = (x.name!="") ? x.name : ( basenames[x.character]!=null ? basenames[x.character] : capitalize(x.character) );
+            let portrait = (x.portrait!="") ? x.portrait : "stand"; // stand.png is the default portrait for each character.
+            let imgPath = (portrait=="none") ? "https://ancilloy.github.io/Zeronpa/portraits/none/none.png" : `https://ancilloy.github.io/Zeronpa/portraits/${x.character}/${portrait}.png`;
 
             let portraitCell = document.createElement("td");
             portraitCell.className = "portrait";
-            portraitCell.innerHTML = `<img src="https://ancilloy.github.io/Zeronpa/portraits/${x.character}/${x.portrait}.png"><p>${name}</p>`;
+            portraitCell.innerHTML = `<img src="${imgPath}"><p>${name}</p>`;
             line.appendChild(portraitCell);
 
             let textCell = document.createElement("td");
