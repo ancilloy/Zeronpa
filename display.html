@@ -24,10 +24,26 @@
                 font-family: Helvetica, Arial, sans-serif;
             }
 
+            .decor {
+                width: 100%;
+                text-align: center;
+                margin-top: 100px;
+            }
+
+            .decor img {
+                height: 200px;
+            }
+
+            .mainSection {
+                text-align: center;
+                width: 100%;
+            }
+
             table.content {
                 border: 1px solid black;
                 border-collapse: collapse;
                 margin: auto;
+                margin-top: 50px;
                 width: 75%;
             }
 
@@ -63,12 +79,13 @@
             <input id="volumeBar" type="range" min="0" max="100" value="50">
             <audio id="musicPlayer" loop="yes" src="musics/binary_game.mp3"></audio>
         </div>
-        <table class="content" id="firstTab"></table>
+
+        <div id="mainSection"></div>
 
         <script src="libs/papaparse.min.js"></script>
         <script src="display.js"></script>
         <script>
-            displayScript("test");
+            readScript("test");
         </script>
     </body>
 </html>
