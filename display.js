@@ -16,6 +16,18 @@ let basenames = {
 let musicPlayer = document.getElementById("musicPlayer");
 musicPlayer.volume = document.getElementById("volumeBar").value / 100;
 
+let visibilityObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            musicPlayer.src = `musics/${entry.target.music}.mp3`;
+            musicPlayer.play();
+            visibilityObserver.unobserve(entry.target);
+        }
+    })
+}, {
+    threshold: 1
+});
+
 function mute() {
     if (musicPlayer.muted) {
         musicPlayer.muted = false;
@@ -92,6 +104,9 @@ function readScript(scriptName) {
                         state.currentTab = null;
                         state.dialogueName = null;
                         break;
+                    case "music":
+                        state.music = line.name; // Third column : command argument (here, name of the dialogue)
+                        break;
                     default: // Unknown command.
                         console.log(`----- Error ! Unrecognized command ${line.portrait} :`);
                         console.log(line);
@@ -101,6 +116,13 @@ function readScript(scriptName) {
                 if (state.readingDialogue) {
                     let tabLine = readDialogueLine(line);
                     state.currentTab.appendChild(tabLine);
+
+                    if (state.music!=null) {
+                        tabLine.music = state.music;
+                        console.log(tabLine)
+                        visibilityObserver.observe(tabLine);
+                        state.music = null;
+                    }
                 } else {
                     console.log("----- Error ! Unrecognized out of context line :");
                     console.log(line);
