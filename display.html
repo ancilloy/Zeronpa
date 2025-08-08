@@ -44,7 +44,6 @@
 
                 box-sizing: border-box;
                 height: 100%;
-                width: 50%;
                 min-height: 125px; /* Pour éviter que le dépasseur ne se déforme lors du changement. */
                 padding: 5px;
                 margin: 0;
@@ -56,10 +55,12 @@
 
             .slider_base {
                 left: 100%;
+                width: 50%;
             }
 
             .sliderHidden {
                 left: 100%;
+                width: 50%;
                 animation-name: kk_slidin;
                 animation-duration: .8s;
                 animation-timing-function: ease-in;
@@ -68,6 +69,7 @@
 
             .sliderVisible {
                 left: 50%;
+                width: 50%;
                 animation-name: kk_slidin;
                 animation-duration: .8s;
                 animation-timing-function: ease-out;
@@ -133,6 +135,41 @@
                 animation-duration: .8s;
             }
 
+            @media only screen and (max-width: 768px) {
+                .slider_base {
+                    width: 0px;
+                    padding: 0;
+                    visibility: hidden;
+                }
+
+                .sliderHidden {
+                    width: 0px;
+                    padding: 0;
+                    visibility: hidden;
+                    animation-name: none;
+                }
+
+                .sliderVisible {
+                    width: 80%;
+                    left: 20%;
+                    animation-name: none;
+                }
+
+                .depasseur {
+                    visibility: visible;
+                }
+
+                /* Slider */
+
+                .filterVisible {
+                    animation-name: none;
+                }
+
+                .filterHidden {
+                    animation-name: none;
+                }
+            }
+
 
 
 
@@ -166,7 +203,8 @@
             .decor {
                 width: 100%;
                 text-align: center;
-                margin-top: 50px;
+                margin-top: 30px;
+                margin-bottom: 20px;
             }
 
             .decor img {
@@ -178,7 +216,8 @@
                 border: 1px solid black;
                 border-collapse: collapse;
                 margin: auto;
-                margin-top: 50px;
+                margin-top: 30px;
+                margin-bottom: 20px;
                 width: 75%;
             }
 
