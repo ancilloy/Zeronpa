@@ -3,25 +3,158 @@
     <head>
         <title>Zeronpa</title>
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=pause,play_arrow,volume_off,volume_up" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
         <style>
-            .material-symbols-outlined {
-                font-variation-settings:
-                'FILL' 1,
-                'wght' 400,
-                'GRAD' 0,
-                'opsz' 24
-            }
-
             .touchy {
                 cursor: pointer;
             }
 
+            html {
+                height: 100%;
+                width: 100%;
+            }
+
             body {
+                height: 100%;
+                margin: 0;
                 background-color: gray;
                 color: white;
                 font-family: Helvetica, Arial, sans-serif;
+                overflow: hidden;
+            }
+
+
+
+
+            /* Slider */
+
+            @keyframes kk_slidin {
+                0%   {left: 100%;}
+                100% {left: 50%;}
+            }
+
+            #zack_slider {
+                border: 1px solid;
+                border-color: #333 yellow #333 #333;
+                background-color: yellow;
+                color: black;
+
+                box-sizing: border-box;
+                height: 100%;
+                width: 50%;
+                min-height: 125px; /* Pour éviter que le dépasseur ne se déforme lors du changement. */
+                padding: 5px;
+                margin: 0;
+
+                position: absolute;
+                top: 0;
+                z-index: 2;
+            }
+
+            .slider_base {
+                left: 100%;
+            }
+
+            .sliderHidden {
+                left: 100%;
+                animation-name: kk_slidin;
+                animation-duration: .8s;
+                animation-timing-function: ease-in;
+                animation-direction: reverse;
+            }
+
+            .sliderVisible {
+                left: 50%;
+                animation-name: kk_slidin;
+                animation-duration: .8s;
+                animation-timing-function: ease-out;
+            }
+
+            .depasseur {
+                border: solid 1px;
+                border-color: #333 yellow #333 #333;
+                border-radius: 1px 0 0 1px;
+                background-color: inherit;
+                cursor: pointer;
+
+                padding: 5px 2px;
+                font-weight: bold;
+
+                position: absolute;
+                z-index: 2;
+                right: 100%;
+                top: 0;
+            }
+
+            .prevent-select {
+                -webkit-user-select: none; /* Safari */
+                -ms-user-select: none; /* IE 10 and IE 11 */
+                user-select: none; /* Standard syntax */
+            }
+
+            /* Slider */
+
+            @keyframes doNotVibe {
+                0%   {opacity: 0.5; visibility: visible;}
+                100% {opacity: 0;   visibility: hidden; }
+            }
+
+            .grayFilter {
+                width: 100%;
+                height: 100%;
+
+                z-index: 1;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            .filterBase {
+                visibility: hidden;
+                opacity: 0;
+                background-color: black;
+            }
+
+            .filterVisible {
+                opacity: 0.5;
+                background-color: black;
+                animation-name: doNotVibe;
+                animation-duration: .8s;
+                animation-direction: reverse;
+            }
+
+            .filterHidden {
+                visibility: hidden;
+                background-color: black;
+                animation-name: doNotVibe;
+                animation-duration: .8s;
+            }
+
+
+
+
+
+
+
+            #mainMain {
+                height: 100%;
+                width: 100%;
+                overflow-x: hidden;
+            }
+
+            #mainSection {
+                text-align: center;
+                width: 100%;
+                height: 100%;
+                overflow-y: scroll;
+            }
+
+            #musicInfo {
+                color: yellow;
+                font-size: 12px;
+                width: 70%;
+                margin: auto;
             }
 
             .soundControl {
@@ -36,11 +169,6 @@
 
             .decor img {
                 height: 200px;
-            }
-
-            .mainSection {
-                text-align: center;
-                width: 100%;
             }
 
             table.content {
@@ -77,18 +205,53 @@
         </style>
     </head>
     <body id="body">
-        <div class="soundControl">
-            <button id="pauseButton" onclick="pause()" class="touchy"><span class="material-symbols-outlined">play_arrow</span></button>
-            <span style="color: black;" id="muteButton" onclick="mute();" class="material-symbols-outlined touchy">volume_up</span>
-            <input id="volumeBar" type="range" min="0" max="100" value="50">
-            <audio id="musicPlayer" loop="yes" src="musics/binary_game.mp3"></audio>
-        </div>
+        <div id="mainMain">
+            <div id="zack_slider" class="slider_base">
+                <div class="depasseur prevent-select" onclick="slide();"><span class="material-symbols-outlined">dehaze</span></div>
+                <div class="soundControl">
+                    <button id="pauseButton" onclick="pause()" class="touchy"><span class="material-symbols-outlined">play_arrow</span></button>
+                    <span style="color: black;" id="muteButton" onclick="mute();" class="material-symbols-outlined touchy">volume_up</span>
+                    <input id="volumeBar" type="range" min="0" max="100" value="50">
+                    <audio id="musicPlayer" loop="yes" src="musics/binary_game.mp3"></audio>
+                </div>
+            </div>
+            <div id="grayFilter" className="grayFilter filterBase" onclick="slide();"></div>
 
-        <div id="mainSection"></div>
+            <div id="mainSection">
+                <p id="musicInfo">This story is accompanied by music, that plays and changes as you scroll the page.
+                    You can adjust and disable it inside the sliding menu on the top-right corner of the screen.</p>
+            </div>
+        </div>
 
         <script src="libs/papaparse.min.js"></script>
         <script src="display.js"></script>
         <script>
+            function slide() {
+                let zack = document.getElementById("zack_slider");
+                let phil = document.getElementById("grayFilter");
+
+                if (zack.className.includes("sliderVisible")) {
+                    zack.classList.remove("sliderVisible");
+                    phil.classList.remove("filterVisible");
+
+                    void zack.offsetWidth; // Provoque un recalcul pour réinitialiser l'animation
+                    void phil.offsetWidth;
+
+                    zack.className =            "sliderHidden";
+                    phil.className = "grayFilter filterHidden";
+                } else {
+                    // Forcer la réinitialisation de l'animation
+                    zack.classList.remove("sliderHidden");
+                    phil.classList.remove("filterHidden");
+
+                    void zack.offsetWidth; // Provoque un recalcul pour réinitialiser l'animation
+                    void phil.offsetWidth;
+
+                    zack.className =            "sliderVisible";
+                    phil.className = "grayFilter filterVisible";
+                }
+            }
+
             readScript("test");
         </script>
     </body>

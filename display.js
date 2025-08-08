@@ -119,7 +119,6 @@ function readScript(scriptName) {
 
                     if (state.music!=null) {
                         tabLine.music = state.music;
-                        console.log(tabLine)
                         visibilityObserver.observe(tabLine);
                         state.music = null;
                     }
