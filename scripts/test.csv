@@ -2,9 +2,10 @@ character,portrait,name,text
 cmd,decor,warehouseA,
 cmd,beginDialogue,,
 zero,smug,???,Stop everything !
-santa,shock,,Huh ?
+santa,shock,,|Huh ?|
 zero,stand,,Santa ! Get the banana !
-santa,surprise,,What the heck ?
+santa,surprise,,|What the heck ? There’s no *banana* here.|
+none,,,"`Indeed, there was no banana here.`"
 zero,happy,,Potassium !
 k,stand,,I'm confused.
 june,worry,,Lorem ipsum.

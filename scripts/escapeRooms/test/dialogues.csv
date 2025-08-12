@@ -1,0 +1,80 @@
+character,portrait,name,text
+cmd,beginDialogue,initDialogue,
+santa,surprise,,Huh ? Where the hell are we ?
+june,uneasy,,No idea… I don’t even remember how we got here.
+santa,,,"Well, there’s no use standing around. We should seek a way out."
+june,,,"Yeah, you’re right."
+cmd,endDialogue,,
+
+cmd,beginDialogue,signInspect,
+june,wonder,,"This sign reads… ""Seek a way out"""
+santa,serious,,"Yes, that’s already what we’re trying to do. Thanks for your contribution, sign."
+cmd,endDialogue,,
+
+cmd,beginDialogue,tableInspect,
+santa,wonder,,Seems like a regular table to me.
+june,,,Do you think it might hold some kind of secret ?
+santa,surprise,,"… It’s a table, June."
+june,happy,,"Well, you never know."
+santa,,,Where do you even hide a secret on a table ? There’s nothing on it.
+june,uneasy,,Yeah… you’re probably right.
+santa,surprise,,|Why does she sound so disappointed ? It’s just a table.|
+cmd,endDialogue,,
+
+cmd,beginDialogue,chairInspect,
+santa,,,Just a regular wooden chair.
+santa,smug,,Do you think we can use it to break down the door ?
+june,wonder,,… Which door ?
+santa,shock,,Now that you mention it… there’s no exit door in this room.
+santa,wonder,,How the hell are we going to exit this room ?
+june,surprise,,Santa… I think there’s something behind the chair.
+santa,surprise,,"|June walked over to the chair, and pulled it away from the wall. And indeed, there was an object, hidden between the chair and the wall.|"
+june,shock,,Is that… a *axe* !?
+santa,shock,,Seems like it…
+santa,shock,,"|I took the axe in my hands. It was pretty heavy. No doubt about it, it’s a real one.|"
+none,,,`You obtained the axe.`
+santa,smug,,"Hey, how about we use it to break down the door ?"
+june,wonder,,"There’s no door, remember ?"
+santa,uneasy,,"|Crap, she’s right...|"
+june,uneasy,,"Anyway, we probably shouldn’t tell Clover we found this."
+santa,shock,,"Yeah, you’re right…"
+cmd,endDialogue,,
+
+cmd,beginDialogue,axeOnChair,
+santa,angry2,,"Step back, June."
+june,surprise,,Uh ? Okay…
+santa,angry,,"|I raised up my axe, before sending crashing down on the chair, which was instantly broken down.|"
+june,worry,,… Why did you do that ?
+santa,surprise,,I thought it might reveal some clue.
+june,wonder,,Well… let’s just hope we don’t want to sit down later.
+santa,smug,,"Honestly, if it broke so easily to a single strike, it was probably very fragile. I wouldn’t really be confident sitting on it."
+june,wonder,,… Guess you’re right.
+cmd,endDialogue,,
+
+cmd,beginDialogue,axeOnTable,
+santa,angry2,,"Okay, I’m gonna break this table down !"
+june,worry,,Are you sure about it ?
+santa,angry2,,"Don’t worry, it will be fine. It’s not like we need it."
+santa,angry2,,"|With a single axe strike, the table was broken in two.|"
+june,shock,,"Oh, look ! There’s something underneath."
+santa,shock,,"Yeah, you’re right. It is… a trapdoor ? How did we not notice it ?"
+june,happy,,Ha ! I knew this table was hiding something.
+cmd,endDialogue,,
+
+cmd,beginDialogue,trapInspect,
+june,wonder,,Do you think it’s the exit ?
+santa,,,There’s only one way to know.
+santa,,,"|I grabbed the handle of the trapdoor, and opened it. Under it was a crawlspace.|"
+june,happy,,"Well, looks like we’ve found it."
+santa,,,That’s right. Let’s go.
+cmd,endDialogue,,
+
+cmd,beginDialogue,axeOnTrapdoor,
+santa,angry2,,Yaaaaaah !
+santa,angry2,,"|Using the axe again, I broke down the trapdoor.|"
+santa,smug,,Look ! There’s a crawlspace under the trapdoor. That’s gotta be the exit.
+june,wonder,,"Yeah, but… couldn’t you just have opened it ?"
+santa,surprise,,"Uh… yeah, I guess."
+june,happy,,"Well, guess that doesn’t matter. We fount the exit !"
+santa,,,"That’s right. Okay, let’s go !"
+cmd,endDialogue,,

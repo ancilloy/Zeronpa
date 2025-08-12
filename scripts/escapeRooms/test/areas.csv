@@ -1,0 +1,6 @@
+id,name,dialogueOnInspection,itemsGrantedOnInspection,itemsRemovedOnInspection,areasGrantedOnInspection,areasRemovedOnInspection
+init,,initDialogue,,,table|chair|sign,
+table,Table,tableInspect,,,,
+chair,Chair,chairInspect,axe,,,
+sign,Sign,signInspect,,,,
+trapdoor,Trapdoor,trapInspect,exit,,,

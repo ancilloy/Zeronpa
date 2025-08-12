@@ -1,0 +1,4 @@
+areaId,itemId,dialogue,itemsGranted,itemsRemoved,areasGranted,areasRemoved
+table,axe,axeOnTable,,,trapdoor,table
+chair,axe,axeOnChair,,,,chair
+trapdoor,axe,axeOnTrapdoor,exit,,,
