@@ -13,14 +13,26 @@ let basenames = {
 
 
 
+let musicNames = {};
+Papa.parse(`https://ancilloy.github.io/Zeronpa/musics/musicnames.csv`, { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
+    if (res.data == null) {
+        console.log("----- Error ! Unreadable line in musicnames.csv :");
+        console.log(res);
+    } else {
+        let line = res.data;
+        musicNames[line.id] = line.name;
+    }
+} });
+
+let musicNameInterval = null;
+
 let musicPlayer = document.getElementById("musicPlayer");
 musicPlayer.volume = document.getElementById("volumeBar").value / 100;
 
 let visibilityObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
-            musicPlayer.src = `musics/${entry.target.music}.mp3`;
-            musicPlayer.play();
+            musicChange(entry.target.music);
             visibilityObserver.unobserve(entry.target);
         }
     })
@@ -41,10 +53,33 @@ function mute() {
 function pause() {
     if (musicPlayer.paused) {
         musicPlayer.play();
-        document.getElementById("pauseButton").innerHTML = '<span class="material-symbols-outlined">pause</span>';
     } else {
         musicPlayer.pause();
+    }
+
+    if (musicPlayer.paused) {
         document.getElementById("pauseButton").innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
+    } else {
+        document.getElementById("pauseButton").innerHTML = '<span class="material-symbols-outlined">pause</span>';
+    }
+}
+
+function musicChange(name) {
+    musicPlayer.src = `musics/${name}.mp3`;
+    musicPlayer.play();
+
+    if (musicNameInterval!=null) {
+        clearInterval(musicNameInterval);
+    }
+    if (musicNames[name]!=null) {
+        document.getElementById("trackInfo").innerHTML = `Current track : ${musicNames[name]}`;
+    } else {
+        musicNameInterval = setInterval(() => {
+            if (musicNames[name]!=null) {
+                document.getElementById("trackInfo").innerHTML = `Current track : ${musicNames[name]}`;
+                clearInterval(musicNameInterval);
+            }
+        }, 1000);
     }
 }
 

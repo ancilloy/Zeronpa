@@ -138,17 +138,19 @@
             @media only screen and (max-width: 1025px) {
                 .slider_base {
                     width: 0px;
+                    right: 0;
+                    left: auto;
                     padding: 0;
                     visibility: hidden;
-                    overflow: hidden;
                 }
 
                 .sliderHidden {
                     width: 0px;
+                    right: 0;
+                    left: auto;
                     padding: 0;
                     visibility: hidden;
                     animation-name: none;
-                    overflow: hidden;
                 }
 
                 .sliderVisible {
@@ -159,6 +161,7 @@
 
                 .depasseur {
                     visibility: visible;
+                    padding: 30px;
                 }
 
                 /* Slider */
@@ -256,20 +259,26 @@
                     <button id="pauseButton" onclick="pause()" class="touchy"><span class="material-symbols-outlined">play_arrow</span></button>
                     <span style="color: black;" id="muteButton" onclick="mute();" class="material-symbols-outlined touchy">volume_up</span>
                     <input id="volumeBar" type="range" min="0" max="100" value="50">
-                    <audio id="musicPlayer" loop="yes" src="musics/binary_game.mp3"></audio>
+                    <audio id="musicPlayer" loop="yes" src="musics/4_33.mp3"></audio>
+                    <p id="trackInfo">Current track : none</p>
                 </div>
             </div>
             <div id="grayFilter" className="grayFilter filterBase" onclick="slide();"></div>
 
             <div id="mainSection">
-                <p id="musicInfo">This story is accompanied by music, that plays and changes as you scroll the page.
-                    You can adjust and disable it inside the sliding menu on the top-right corner of the screen.</p>
+                <p id="musicInfo">
+                    This story is accompanied by music, that plays and changes as you scroll the page.
+                    You can adjust and disable it inside the sliding menu on the top-right corner of the screen.
+                </p>
             </div>
         </div>
 
         <script src="libs/papaparse.min.js"></script>
         <script src="display.js"></script>
         <script>
+            pause();
+
+
             function slide() {
                 let zack = document.getElementById("zack_slider");
                 let phil = document.getElementById("grayFilter");
