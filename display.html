@@ -44,13 +44,20 @@
 
                 box-sizing: border-box;
                 height: 100%;
-                min-height: 125px; /* Pour éviter que le dépasseur ne se déforme lors du changement. */
                 padding: 5px;
                 margin: 0;
 
                 position: absolute;
                 top: 0;
                 z-index: 2;
+            }
+
+            #zack_slider > div {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
             }
 
             .slider_base {
@@ -82,6 +89,7 @@
                 background-color: inherit;
                 cursor: pointer;
 
+                margin: 0;
                 padding: 5px 2px;
                 font-weight: bold;
 
@@ -141,11 +149,11 @@
                     right: 0;
                     left: unset;
                     padding: 0;
-                    visibility: hidden;
+                    visibility: collapse;
                 }
 
                 .slider_base input {
-                    visibility: hidden;
+                    visibility: collapse;
                 }
 
                 .sliderHidden {
@@ -153,12 +161,12 @@
                     right: 0;
                     left: unset;
                     padding: 0;
-                    visibility: hidden;
+                    visibility: collapse;
                     animation-name: none;
                 }
 
                 .sliderHidden input {
-                    visibility: hidden;
+                    visibility: collapse;
                 }
 
                 .sliderVisible {
@@ -255,6 +263,7 @@
             }
 
             td.portrait p {
+                font-size: 16px;
                 font-weight: bold;
                 margin-top: 5px;
                 margin-bottom: 0;
@@ -262,6 +271,7 @@
             }
 
             td.text {
+                font-size: 20px;
                 background-color: #222;
             }
 
@@ -282,13 +292,15 @@
     <body id="body">
         <div id="mainMain">
             <div id="zack_slider" class="slider_base">
-                <div class="depasseur prevent-select" onclick="slide();"><span class="material-symbols-outlined">dehaze</span></div>
-                <div class="soundControl">
-                    <button id="pauseButton" onclick="pause()" class="touchy"><span class="material-symbols-outlined">play_arrow</span></button>
-                    <span style="color: black;" id="muteButton" onclick="mute();" class="material-symbols-outlined touchy">volume_up</span>
-                    <input id="volumeBar" type="range" min="0" max="100" value="50">
-                    <audio id="musicPlayer" loop="yes" src="musics/4_33.mp3"></audio>
-                    <p id="trackInfo">Current track : none</p>
+                <p class="depasseur prevent-select" onclick="slide();"><span class="material-symbols-outlined">dehaze</span></p>
+                <div>
+                    <div class="soundControl">
+                        <button id="pauseButton" onclick="pause()" class="touchy"><span class="material-symbols-outlined">play_arrow</span></button>
+                        <span style="color: black;" id="muteButton" onclick="mute();" class="material-symbols-outlined touchy">volume_up</span>
+                        <input id="volumeBar" type="range" min="0" max="100" value="50">
+                        <audio id="musicPlayer" loop="yes" src="musics/4_33.mp3"></audio>
+                        <p id="trackInfo">Current track : none</p>
+                    </div>
                 </div>
             </div>
             <div id="grayFilter" className="grayFilter filterBase" onclick="slide();"></div>
