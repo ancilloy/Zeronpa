@@ -183,8 +183,42 @@ function readDialogueLine(line) {
     tabLine.appendChild(portraitCell);
 
     let textCell = document.createElement("td");
-    textCell.innerHTML = line.text;
+    textCell.className = "text";
+    let parsed = parseColors(line.text)
+    textCell.innerHTML = parsed.text;
     tabLine.appendChild(textCell);
 
     return tabLine;
+}
+
+function parseColors(text) {
+    let ret = {
+        text: "",
+        weakPoints: [],
+        agreePoints: []
+    }
+
+    let split1 = text.split("`");
+    let text1 = split1[0];
+    for (let i=2; i<split1.length; i+=2) {
+        text1 += `<span class="narration">${split1[i-1]}</span>${split1[i]}`;
+
+    }
+
+    let split2 = text1.split("|");
+    let text2 = split2[0];
+    for (let i=2; i<split2.length; i+=2) {
+        text2 += `<span class="agree">${split2[i-1]}</span>${split2[i]}`;
+        ret.agreePoints.push(split2[i-1]);
+    }
+
+    let split3 = text2.split("*");
+    let text3 = split3[0];
+    for (let i=2; i<split3.length; i+=2) {
+        text3 += `<span class="weak">${split3[i-1]}</span>${split3[i]}`;
+        ret.weakPoints.push(split3[i-1]);
+    }
+
+    ret.text = text3;
+    return ret;
 }
