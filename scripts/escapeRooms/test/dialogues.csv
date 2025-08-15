@@ -1,5 +1,6 @@
 character,portrait,name,text
 cmd,beginDialogue,initDialogue,
+cmd,music,binary_game,
 santa,surprise,,Huh ? Where the hell are we ?
 june,uneasy,,No idea… I don’t even remember how we got here.
 santa,,,"Well, there’s no use standing around. We should seek a way out."
