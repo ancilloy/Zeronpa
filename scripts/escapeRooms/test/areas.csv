@@ -1,4 +1,4 @@
-id,name,dialogueOnInspection,itemsGrantedOnInspection,itemsRemovedOnInspection,areasGrantedOnInspection,areasRemovedOnInspection
+id,name,dialogue,itemsGranted,itemsRemoved,areasGranted,areasRemoved
 init,,initDialogue,,,table|chair|sign,
 table,Table,tableInspect,,,,
 chair,Chair,chairInspect,axe,,,
