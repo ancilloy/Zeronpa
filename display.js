@@ -1,5 +1,7 @@
+let global = {};
+
 // ---------- Basenames definition ---------- //
-let basenames = {
+global.basenames = {
     "zero"    : "Zero III",
     "oldAkane": "Akane",
     "none"    : ""
@@ -13,27 +15,38 @@ let basenames = {
 
 
 
-let musicNames = {};
-Papa.parse(`https://ancilloy.github.io/Zeronpa/musics/musicnames.csv`, { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
+
+function papaParseAsync(url, options) {
+    return new Promise((resolve, reject) => {
+        Papa.parse(url, {
+            ...options,
+            complete: results => resolve(results),
+            error: err => reject(err)
+        });
+    });
+}
+
+global.musicNames = {};
+papaParseAsync(`https://ancilloy.github.io/Zeronpa/musics/musicnames.csv`, { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
     if (res.data == null) {
         console.log("----- Error ! Unreadable line in musicnames.csv :");
         console.log(res);
     } else {
         let line = res.data;
-        musicNames[line.id] = line.name;
+        global.musicNames[line.id] = line.name;
     }
 } });
 
-let musicNameInterval = null;
+global.musicNameInterval = null;
 
-let musicPlayer = document.getElementById("musicPlayer");
-musicPlayer.volume = document.getElementById("volumeBar").value / 100;
+global.musicPlayer = document.getElementById("musicPlayer");
+global.musicPlayer.volume = document.getElementById("volumeBar").value / 100;
 
-let visibilityObserver = new IntersectionObserver(entries => {
+global.visibilityObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if(entry.isIntersecting){
             musicChange(entry.target.music);
-            visibilityObserver.unobserve(entry.target);
+            global.visibilityObserver.unobserve(entry.target);
         }
     })
 }, {
@@ -41,23 +54,26 @@ let visibilityObserver = new IntersectionObserver(entries => {
 });
 
 function mute() {
-    if (musicPlayer.muted) {
-        musicPlayer.muted = false;
+    if (global.musicPlayer.muted) {
+        global.musicPlayer.muted = false;
         document.getElementById("muteButton").innerHTML = 'volume_up';
     } else {
-        musicPlayer.muted = true;
+        global.musicPlayer.muted = true;
         document.getElementById("muteButton").innerHTML = 'volume_off';
     }
 }
 
 function pause() {
-    if (musicPlayer.paused) {
-        musicPlayer.play();
+    if (global.musicPlayer.paused) {
+        global.musicPlayer.play();
     } else {
-        musicPlayer.pause();
+        global.musicPlayer.pause();
     }
+    updatePauseButton();
+}
 
-    if (musicPlayer.paused) {
+function updatePauseButton() {
+    if (global.musicPlayer.paused) {
         document.getElementById("pauseButton").innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
     } else {
         document.getElementById("pauseButton").innerHTML = '<span class="material-symbols-outlined">pause</span>';
@@ -65,26 +81,27 @@ function pause() {
 }
 
 function musicChange(name) {
-    musicPlayer.src = `musics/${name}.mp3`;
-    musicPlayer.play();
+    global.musicPlayer.src = `musics/${name}.mp3`;
+    global.musicPlayer.play();
+    updatePauseButton();
 
-    if (musicNameInterval!=null) {
-        clearInterval(musicNameInterval);
+    if (global.musicNameInterval!=null) {
+        clearInterval(global.musicNameInterval);
     }
-    if (musicNames[name]!=null) {
-        document.getElementById("trackInfo").innerHTML = `Current track : ${musicNames[name]}`;
+    if (global.musicNames[name]!=null) {
+        document.getElementById("trackInfo").innerHTML = `Current track : ${global.musicNames[name]}`;
     } else {
-        musicNameInterval = setInterval(() => {
-            if (musicNames[name]!=null) {
-                document.getElementById("trackInfo").innerHTML = `Current track : ${musicNames[name]}`;
-                clearInterval(musicNameInterval);
+        global.musicNameInterval = setInterval(() => {
+            if (global.musicNames[name]!=null) {
+                document.getElementById("trackInfo").innerHTML = `Current track : ${global.musicNames[name]}`;
+                clearInterval(global.musicNameInterval);
             }
         }, 1000);
     }
 }
 
 function volumeChange(ev) {
-    musicPlayer.volume = this.value / 100;
+    global.musicPlayer.volume = this.value / 100;
 }
 document.getElementById("volumeBar").addEventListener("change", volumeChange);
 
@@ -93,14 +110,24 @@ document.getElementById("volumeBar").addEventListener("change", volumeChange);
 
 
 
+
+
+// =======================================
+// ========== Reading dialogues ==========
+// =======================================
+
 function capitalize(mot) {
     return mot.charAt(0).toUpperCase() + mot.slice(1);
 }
 
-let mainSection = document.getElementById("mainSection");
-let dialoguesBank = {};
+global.mainSection = document.getElementById("mainSection");
+global.dialoguesBank = {};
 
-function readScript(scriptName) {
+async function readScriptName(scriptName) {
+    await readScriptPath(`https://ancilloy.github.io/Zeronpa/scripts/${scriptName}.csv`);
+}
+
+async function readScriptPath(scriptPath) {
     let state = {
         readingDialogue: false,
         music: null,
@@ -108,7 +135,7 @@ function readScript(scriptName) {
         dialogueName: null
     };
 
-    Papa.parse(`https://ancilloy.github.io/Zeronpa/scripts/${scriptName}.csv`, { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
+    await papaParseAsync(scriptPath, { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
         if (res.data == null) {
             console.log("----- Error ! Unreadable line :");
             console.log(res);
@@ -121,7 +148,7 @@ function readScript(scriptName) {
                         let decor = document.createElement("div");
                         decor.className = "decor";
                         decor.innerHTML = `<img src="https://ancilloy.github.io/Zeronpa/decors/${decorName}.png">`;
-                        mainSection.appendChild(decor);
+                        global.mainSection.appendChild(decor);
                         break;
                     case "beginDialogue":
                         state.currentTab = document.createElement("table");
@@ -132,9 +159,9 @@ function readScript(scriptName) {
                     case "endDialogue":
                         state.readingDialogue = false;
                         if (state.dialogueName=="") { // If dialogueName is empty, the dialogue is immediately displayed.
-                            mainSection.appendChild(state.currentTab);
+                            global.mainSection.appendChild(state.currentTab);
                         } else { // Else, it is stored in the bank, to be displayed later.
-                            dialoguesBank[state.dialogueName] = state.currentTab;
+                            global.dialoguesBank[state.dialogueName] = state.currentTab;
                         }
                         state.currentTab = null;
                         state.dialogueName = null;
@@ -154,7 +181,7 @@ function readScript(scriptName) {
 
                     if (state.music!=null) {
                         tabLine.music = state.music;
-                        visibilityObserver.observe(tabLine);
+                        global.visibilityObserver.observe(tabLine);
                         state.music = null;
                     }
                 } else {
@@ -172,7 +199,7 @@ function readDialogueLine(line) {
     // If a character has a special name for that line, it will be displayed.
     // If not, their base name will be displayed. For most characters, it is just their name in-code but with a capital.
     // Some other characters have special base names, listed at the beginning of this file (example : zero -> Zero III)
-    let name = (line.name!="") ? line.name : ( basenames[line.character]!=null ? basenames[line.character] : capitalize(line.character) );
+    let name = (line.name!="") ? line.name : ( global.basenames[line.character]!=null ? global.basenames[line.character] : capitalize(line.character) );
 
     let portrait = (line.portrait!="") ? line.portrait : "stand"; // stand.png is the default portrait for each character.
     let imgPath = (portrait=="none") ? "https://ancilloy.github.io/Zeronpa/portraits/none/stand.png" : `https://ancilloy.github.io/Zeronpa/portraits/${line.character}/${portrait}.png`;
@@ -221,4 +248,243 @@ function parseColors(text) {
 
     ret.text = text3;
     return ret;
+}
+
+
+
+
+
+
+
+// ==================================
+// ========== Escape rooms ==========
+// ==================================
+
+function escapeRoomCommands(index) {
+    let tRow = document.createElement("tr");
+    tRow.id = `commandsRow-${index}`;
+
+    let commands = document.createElement("td");
+    commands.className = "commands";
+    commands.colSpan = 2;
+
+    let areaInspector = document.createElement("div");
+    areaInspector.className = "col3";
+
+    let areaInspectorLabel = document.createElement("span");
+    areaInspectorLabel.className = "label";
+    areaInspectorLabel.innerHTML = "Inspect an area";
+    areaInspector.appendChild(areaInspectorLabel);
+
+    let areaInspectorPart1 = document.createElement("div");
+    let areaInspectSelector = newSelector(global.areasList, global.allAreas, true);
+    areaInspectSelector.id = `areaInspectSelector-${index}`;
+    areaInspectorPart1.appendChild(areaInspectSelector);
+    areaInspector.appendChild(areaInspectorPart1);
+
+    let areaInspectorPart2 = document.createElement("div");
+    areaInspector.appendChild(areaInspectorPart2);
+
+    let areaInspectorPart3 = document.createElement("div");
+    areaInspectorPart3.innerHTML = `<button id="inspectButton-${index}" onClick="inspectArea(${index});">Inspect</button>`
+    areaInspector.appendChild(areaInspectorPart3);
+
+    commands.appendChild(areaInspector);
+
+
+
+    let areaInteractor = document.createElement("div");
+    areaInteractor.className = "col3";
+
+    let areaInteractorLabel = document.createElement("span");
+    areaInteractorLabel.className = "label";
+    areaInteractorLabel.innerHTML = "Use an item somewhere";
+    areaInteractor.appendChild(areaInteractorLabel);
+
+    let noItems = global.itemsList.length==0;
+
+    let areaInteractorPart1 = document.createElement("div");
+    let areaInteractSelector = newSelector(global.areasList, global.allAreas);
+    areaInteractSelector.id = `areaInteractSelector-${index}`;
+    if (noItems) { areaInteractSelector.disabled = true; }
+    areaInteractorPart1.appendChild(areaInteractSelector);
+    areaInteractor.appendChild(areaInteractorPart1);
+
+    let areaInteractorPart2 = document.createElement("div");
+    let itemInteractSelector = newSelector(global.itemsList, global.allItems);
+    itemInteractSelector.id = `itemInteractSelector-${index}`;
+    if (noItems) { itemInteractSelector.disabled = true; }
+    areaInteractorPart2.appendChild(itemInteractSelector);
+    areaInteractor.appendChild(areaInteractorPart2);
+
+    let areaInteractorPart3 = document.createElement("div");
+    areaInteractorPart3.innerHTML = `<button id="interactButton-${index}" onClick="interactArea(${index});"${noItems ? " disabled=true" : ""}>Use item</button>`
+    areaInteractor.appendChild(areaInteractorPart3);
+
+
+    commands.appendChild(areaInteractor);
+
+
+
+    let resultDisplayDiv = document.createElement("div");
+
+    let resultDisplay = document.createElement("span");
+    resultDisplay.id = `resultDisplay-${index}`;
+    resultDisplay.className = "empty";
+    resultDisplay.innerHTML = ".";
+    resultDisplayDiv.appendChild(resultDisplay);
+
+    let resultDisplayLabel = document.createElement("span");
+    resultDisplayLabel.className = "label";
+    resultDisplayLabel.innerHTML = "Result";
+    resultDisplayDiv.appendChild(resultDisplayLabel);
+
+    commands.appendChild(resultDisplayDiv);
+
+    tRow.appendChild(commands)
+    return tRow;
+}
+
+function newSelector(collection, database, inspect=false) {
+    let selector = document.createElement("select");
+
+    for(let i=0; i<collection.length; i++) {
+        let op = document.createElement("option");
+        op.innerHTML = database[collection[i]].name;
+        op.value = database[collection[i]].id;
+        if (inspect && global.inspectedAreas[collection[i]]==true) {
+            op.className = "inspected";
+        }
+        selector.appendChild(op);
+    }
+
+    return selector;
+}
+
+
+
+async function setupEscapeRoom(name) {
+    global.allItems = {};
+    await papaParseAsync(`https://ancilloy.github.io/Zeronpa/scripts/escapeRooms/${name}/items.csv`, { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: async res => {
+        if (res.data == null) {
+            console.log(`----- Error ! Unreadable line in https://ancilloy.github.io/Zeronpa/scripts/escapeRooms/${name}/items.csv :`);
+            console.log(res);
+        } else {
+            global.allItems[res.data.id] = res.data;
+        }
+    }});
+
+    global.allAreas = {};
+    await papaParseAsync(`https://ancilloy.github.io/Zeronpa/scripts/escapeRooms/${name}/areas.csv`, { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
+        if (res.data == null) {
+            console.log(`----- Error ! Unreadable line in https://ancilloy.github.io/Zeronpa/scripts/escapeRooms/${name}/areas.csv :`);
+            console.log(res);
+        } else {
+            global.allAreas[res.data.id] = res.data;
+        }
+    }});
+
+    global.allInteracts = {};
+    await papaParseAsync(`https://ancilloy.github.io/Zeronpa/scripts/escapeRooms/${name}/interacts.csv`, { download: true, delimiter: ",", header: true, skipEmptyLines: true, step: res => {
+        if (res.data == null) {
+            console.log(`----- Error ! Unreadable line in https://ancilloy.github.io/Zeronpa/scripts/escapeRooms/${name}/interacts.csv :`);
+            console.log(res);
+        } else {
+            let line = res.data;
+            if (global.allInteracts[line.areaId]==null) { global.allInteracts[line.areaId] = {}; }
+            global.allInteracts[line.areaId][line.itemId] = line;
+        }
+    }});
+
+    await readScriptPath(`https://ancilloy.github.io/Zeronpa/scripts/escapeRooms/${name}/dialogues.csv`);
+
+    global.itemsList = [];
+    global.areasList = [];
+    global.inspectedAreas = {};
+    global.currentTab = null;
+    global.currentCommandIndex = 0;
+
+    successfulAction(global.allAreas["init"], 0);
+}
+
+
+
+function inspectArea(index) {
+    let area = document.getElementById(`areaInspectSelector-${index}`).value;
+    let resultDisplay = document.getElementById(`resultDisplay-${index}`);
+
+    if (global.inspectedAreas[area]==true) {
+        resultDisplay.innerHTML = `You've already thouroughly inspected this area.`;
+        resultDisplay.className = "failure";
+    } else {
+        resultDisplay.innerHTML = `Inspected ${global.allAreas[area].name}.`;
+        resultDisplay.className = "success";
+        global.inspectedAreas[area] = true;
+        successfulAction(global.allAreas[area], index);
+    }
+
+}
+
+function interactArea(index) {
+    let area = document.getElementById(`areaInteractSelector-${index}`).value;
+    let item = document.getElementById(`itemInteractSelector-${index}`).value;
+
+    let resultDisplay = document.getElementById(`resultDisplay-${index}`);
+    if (global.allInteracts[area]==null || global.allInteracts[area][item]==null) {
+        resultDisplay.innerHTML = `Can't use ${global.allItems[item].name} on ${global.allAreas[area].name}.`;
+        resultDisplay.className = "failure";
+    } else {
+        successfulAction(global.allInteracts[area][item], index);
+        resultDisplay.innerHTML = `Used ${global.allItems[item].name} on ${global.allAreas[area].name}.`;
+        resultDisplay.className = "success";
+    }
+}
+
+function successfulAction(line, index) {
+    let theEnd = false;
+    if (line.dialogue!="") {
+        console.log(global.dialoguesBank);
+        global.currentTab = global.dialoguesBank[line.dialogue];
+        global.mainSection.appendChild(global.currentTab);
+    }
+
+    if (line.itemsGranted!="") {
+        let itemsToGrant = line.itemsGranted.split("|");
+        theEnd = itemsToGrant.includes("exit");
+        global.itemsList = global.itemsList.concat(itemsToGrant);
+    }
+
+    if (line.itemsRemoved!="") {
+        let itemsToRemove = line.itemsRemoved.split("|");
+        global.itemsList = global.itemsList.filter((item) => !itemsToRemove.includes(item));
+    }
+
+    if (line.areasGranted!="") {
+        let areasToGrant = line.areasGranted.split("|");
+        global.areasList = global.areasList.concat(areasToGrant);
+    }
+
+    if (line.areasRemoved!="") {
+        let areasToRemove = line.areasRemoved.split("|");
+        global.areasList = global.areasList.filter((item) => !areasToRemove.includes(item));
+    }
+
+    if (index!=0) {
+        document.getElementById(`areaInspectSelector-${index}`) .disabled = true;
+        document.getElementById(`inspectButton-${index}`)       .disabled = true;
+        document.getElementById(`areaInteractSelector-${index}`).disabled = true;
+        document.getElementById(`itemInteractSelector-${index}`).disabled = true;
+        document.getElementById(`interactButton-${index}`)      .disabled = true;
+    }
+    global.currentCommandIndex += 1;
+
+    if (!theEnd) {
+        if (global.currentTab==null) {
+            global.currentTab = document.createElement("table");
+            global.mainSection.appendChild(global.currentTab);
+        }
+        global.currentTab.appendChild(escapeRoomCommands(global.currentCommandIndex));
+    } else {
+        global.mainSection.innerHTML += `<a href="https://ancilloy.github.io/Zeronpa/display.html${global.allItems.exit.name}"><button>Next part</button></a>`;
+    }
 }

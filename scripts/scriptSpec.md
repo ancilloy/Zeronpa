@@ -31,13 +31,11 @@ If this cell is empty, the character's default name will be displayed. Character
 ### text
 
 The text content of their line.<br>
-===== TBI =====<br>
 You can color portions of the text :
 - Portions between `` `grave accents` `` will be displayed in <span style="color=green;">green</span>. This is intended for narration.
 - Portions between `|vertical bars|` will be displayed in <span style="color=dodgerblue;">blue</span>. This is intended for the protagonist's inner thoughts, as well as agree points in non-stop debates.
 - Portions between `*asterisks*` will be displayed in <span style="color=orange; font-weight: bold;">orange and bold</span>. This is intended for emphasizing, and weak points in non-stop debates.
 <!-- End of the list -->
-===== TBI =====
 
 ## Commands
 

@@ -34,23 +34,23 @@ The unique id of the area. Can't contain a vertical bar, and can't be **init**.
 
 The name of the area, to be displayed.
 
-### dialogueOnInspection
+### dialogue
 
 The dialogue to be displayed when the player inspects this area.
 
-### itemsGrantedOnInspection
+### itemsGranted
 
 The items the player obtains upon inspecting this area. If there are several, each must be separated by a vertical bar.
 
-### itemsRemovedOnInspection
+### itemsRemoved
 
 The items the player loses upon inspecting this area. If there are several, each must be separated by a vertical bar.
 
-### areasGrantedOnInspection
+### areasGranted
 
 The areas that become available upon inspecting this area. If there are several, each must be separated by a vertical bar.
 
-### areasRemovedOnInspection
+### areasRemoved
 
 The areas that become unavailable upon inspecting this area. If there are several, each must be separated by a vertical bar.
 

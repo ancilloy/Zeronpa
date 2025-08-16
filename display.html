@@ -271,7 +271,7 @@
             }
 
             td.text {
-                font-size: 20px;
+                font-size: 16px;
                 background-color: #222;
             }
 
@@ -286,6 +286,77 @@
             span.weak {
                 color: orange;
                 font-weight: bold;
+            }
+
+
+
+            .commands {
+                background-color: black;
+            }
+
+            .commands > div {
+                position: relative;
+
+                width: 95%;
+
+                background-color: #222f32;
+                border-radius: 4px 10px;
+
+                padding: 5px;
+                margin: auto;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .commands > div > .label {
+                display: inline-block;
+
+                position: absolute;
+                bottom: 100%;
+                left: 10px;
+
+                margin: 0;
+                padding: 2px 5px;
+                border-radius: 4px 4px 0 0;
+
+                background-color: #222f32;
+                color: cyan;
+                font-size: 8px;
+            }
+
+            .col3 > div {
+                width: 33%;
+                display: inline-block;
+                text-align: center;
+            }
+
+            .col3 select {
+                width: 90%;
+                text-align: left;
+            }
+
+            .col3 button {
+                width: 80%;
+            }
+
+            .success {
+                color: chartreuse;
+            }
+
+            .failure {
+                color: red;
+            }
+
+            .empty {
+                color: #222f32;
+            }
+
+            option.inspected {
+                color: gray;
+            }
+
+            #mainSection > a > button {
+                margin: 30px;
             }
         </style>
     </head>
@@ -307,8 +378,9 @@
 
             <div id="mainSection">
                 <p id="musicInfo">
-                    This story is accompanied by music, that plays and changes as you scroll the page.
-                    You can adjust and disable it inside the sliding menu on the top-right corner of the screen.
+                    This story is accompanied by music, that plays and changes as you scroll the page.<br>
+                    You can adjust and disable it inside the sliding menu on the top-right corner of the screen.<br>
+                    If you don't hear it, you might have to start it manually in the sliding menu.<br>
                 </p>
             </div>
         </div>
@@ -316,7 +388,6 @@
         <script src="libs/papaparse.min.js"></script>
         <script src="display.js"></script>
         <script>
-            pause();
 
 
             function slide() {
@@ -345,7 +416,11 @@
                 }
             }
 
-            readScript("test");
+            let urlParams = new URLSearchParams(window.location.search);
+            let script = urlParams.get("poke");
+            let eRoom = urlParams.get("eRoom");
+            if      (script!=null) { readScriptName(script); }
+            else if (eRoom !=null) { setupEscapeRoom(eRoom); }
         </script>
     </body>
 </html>
