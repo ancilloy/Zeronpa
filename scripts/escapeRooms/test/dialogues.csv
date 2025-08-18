@@ -13,7 +13,9 @@ june,wonder,,"The sign on the wall reads… ""Seek a way out"""
 santa,serious,,"Yes, that’s already what we’re trying to do. Thanks for your contribution, sign."
 cmd,endDialogue,,
 
-cmd,beginDialogue,tableInspect,
+
+
+cmd,beginDialogue,tableInspect1,
 santa,,,Seems like a regular table to me.
 june,,,Do you think it might hold some kind of secret ?
 santa,surprise,,"I mean… it’s just a table, June."
@@ -22,6 +24,61 @@ santa,,,There’s nothing on it. What kind of secret could there be ?
 june,uneasy,,"I don't know… call it a hunch, but I feel like something hidden there."
 santa,surprise,,|Yeah… I wouldn't count too much on that.|
 cmd,endDialogue,,
+
+cmd,beginDialogue,TI2,
+santa,smug,,"I'm telling you, there's no secret about this table."
+june,uneasy,,"I know, I know…"
+cmd,endDialogue,,
+
+cmd,beginDialogue,TI3,
+santa,serious,,"Why do you keep inspecting this table ?"
+june,worry,,"I… don't know. It's almost as if a higher entity was telling me to inspect it again."
+santa,worry,,"What the hell ? There's nothing on this table."
+june,sad,,"I know, but… it won't stop asking me to do it."
+santa,uneasy,,"Uh… hey, higher entity. Please stop asking my sister to inspect this table. Seriously, this won't lead anywhere…"
+cmd,endDialogue,,
+
+cmd,beginDialogue,TI4,
+june,shock,,"Santa, it's not stopping !"
+santa,uneasy,,"Really ? This is seriously getting weird."
+cmd,endDialogue,,
+
+cmd,beginDialogue,TI5,
+june,sad,,…
+santa,uneasy,,"Stop doing that…"
+cmd,endDialogue,,
+
+cmd,beginDialogue,TI6,
+santa,uneasy,,…
+cmd,endDialogue,,
+
+cmd,beginDialogue,TI7,
+santa,uneasy,,…
+santa,serious,,"You made it up, right ? This higher being story."
+june,happy,,Maybeee…
+santa,uneasy,,"Oh, for goodness' sake ! How did I fall for it ?"
+june,blush,,"Hehe… I didn't think it it would work either. Sorry, it was just too tempting."
+santa,serious,,"Anyway. I don't want anything to do with this table anymore."
+cmd,endDialogue,,
+
+cmd,beginDialogue,TI8,
+santa,serious,,Stop it.
+cmd,endDialogue,,
+
+cmd,beginDialogue,TI9,
+santa,serious,,…
+cmd,endDialogue,,
+
+cmd,beginDialogue,TI10,
+santa,smug,,Okay, new rule. Anyone who touches this table is a dimwit.
+june,angry,,Seriously ? You're not funny.
+cmd,endDialogue,,
+
+cmd,beginDialogue,TI11,
+santa,smug,,Dimwit.
+cmd,endDialogue,,
+
+
 
 cmd,beginDialogue,chairInspect,
 june,surprise,,Santa… I think there’s something behind the chair.
@@ -33,6 +90,10 @@ none,,,`You obtained the axe.`
 santa,smug,,"It's a shame there's no door. We would have been able to break it down, with it."
 june,uneasy,,"Anyway, we probably shouldn’t tell Clover we found this."
 santa,wonder,,"Yeah, you’re right…"
+cmd,endDialogue,,
+
+cmd,beginDialogue,chairInspect2,
+santa,,,"There's nothing left of note with this chair. Let's move on."
 cmd,endDialogue,,
 
 cmd,beginDialogue,axeOnChair,

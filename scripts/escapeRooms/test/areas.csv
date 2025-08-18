@@ -1,6 +1,6 @@
 id,name,dialogue,itemsGranted,itemsRemoved,areasGranted,areasRemoved
 init,,initDialogue,,,table|chair|sign,
-table,Table,tableInspect,,,,
-chair,Chair,chairInspect,axe,,,
+table,Table,tableInspect1|TI2|TI3|TI4|TI5|TI6|TI7|TI8|TI9|TI10|TI11,,,,
+chair,Chair,chairInspect|chairInspect2,axe,,,
 sign,Sign,signInspect,,,,
 trapdoor,Trapdoor,trapInspect,exit,,,
