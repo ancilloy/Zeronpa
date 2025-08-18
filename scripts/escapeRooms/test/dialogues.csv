@@ -33,7 +33,7 @@ cmd,endDialogue,,
 cmd,beginDialogue,TI3,
 santa,serious,,"Why do you keep inspecting this table ?"
 june,worry,,"I… don't know. It's almost as if a higher entity was telling me to inspect it again."
-santa,worry,,"What the hell ? There's nothing on this table."
+santa,shock,,"What the hell ? There's nothing on this table."
 june,sad,,"I know, but… it won't stop asking me to do it."
 santa,uneasy,,"Uh… hey, higher entity. Please stop asking my sister to inspect this table. Seriously, this won't lead anywhere…"
 cmd,endDialogue,,
@@ -70,7 +70,7 @@ santa,serious,,…
 cmd,endDialogue,,
 
 cmd,beginDialogue,TI10,
-santa,smug,,Okay, new rule. Anyone who touches this table is a dimwit.
+santa,smug,,"Okay, new rule. Anyone who touches this table is a dimwit."
 june,angry,,Seriously ? You're not funny.
 cmd,endDialogue,,
 

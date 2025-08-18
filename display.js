@@ -260,13 +260,26 @@ function parseColors(text) {
 // ========== Escape rooms ==========
 // ==================================
 
-function escapeRoomCommands(index) {
+function escapeRoomCommands(index, tutorial=false) {
     let tRow = document.createElement("tr");
     tRow.id = `commandsRow-${index}`;
 
     let commands = document.createElement("td");
     commands.className = "commands";
     commands.colSpan = 2;
+
+    if (tutorial) {
+        let tutorialBlock = document.createElement("p");
+        tutorialBlock.id = "spoilerBlock-1";
+        tutorialBlock.className = "spoilerBlock spoilerHidden";
+        tutorialBlock.innerHTML = `<p>Welcome. If this is your first time, you might be a little confused, right ? Don't worry, it's really simple. This is an escape room : you are locked inside this room, and must find a way out.</p>` +
+            `<p>The first line of the interface allows you explore a specific area of the room you have access to. Just select where you want to explore, then validate. You can inspect an area several times, which might lead to additonnal dialogue, but only once inspection is enough to advance. Once an area has no more dialogue to yield through inspecting, it will be grayed out in the list.</p>` +
+            `<p>The second line allows you to use specific objects on specific areas of the room. It won't be possible if you have no object, so inspect around to find some. Your actions can influence the room, by altering some areas, or revealing new ones.</p>` +
+            `<p>Huh ? What did you say ? You're not interested in escape rooms, and would rather progress the story ? But... I've worked hard on it... *sigh* No, I understand. The only escape room Danganronpa ever had was optional, after all. If you want to skip this escape room, just click <a class="weak" href="${global.allItems["exit"].name}">this link</a>. Any story-relevant detail mentioned in the room will be mentioned again in the story section.</p>` +
+            `<div id="spoilerHeader-1" class="spoilerHeader prevent-select" onclick="spoil(1);">Show tutorial</div>`;
+
+        commands.appendChild(tutorialBlock);
+    }
 
     let areaInspector = document.createElement("div");
     areaInspector.className = "col3";
@@ -352,7 +365,7 @@ function newSelector(collection, database, inspect=false) {
         let op = document.createElement("option");
         op.innerHTML = database[collection[i]].name;
         op.value = database[collection[i]].id;
-        if (inspect && global.inspectedAreas[collection[i]]==true) {
+        if (inspect && global.inspectedAreas[collection[i]]!= null && global.inspectedAreas[collection[i]].status=="end") {
             op.className = "inspected";
         }
         selector.appendChild(op);
@@ -404,7 +417,7 @@ async function setupEscapeRoom(name) {
     global.currentTab = null;
     global.currentCommandIndex = 0;
 
-    successfulAction(global.allAreas["init"], 0);
+    successfulAction(global.allAreas["init"], 0, "init");
 }
 
 
@@ -413,15 +426,11 @@ function inspectArea(index) {
     let area = document.getElementById(`areaInspectSelector-${index}`).value;
     let resultDisplay = document.getElementById(`resultDisplay-${index}`);
 
-    if (global.inspectedAreas[area]==true) {
-        resultDisplay.innerHTML = `You've already thouroughly inspected this area.`;
-        resultDisplay.className = "failure";
-    } else {
-        resultDisplay.innerHTML = `Inspected ${global.allAreas[area].name}.`;
-        resultDisplay.className = "success";
-        global.inspectedAreas[area] = true;
-        successfulAction(global.allAreas[area], index);
-    }
+    resultDisplay.innerHTML = `Inspected ${global.allAreas[area].name}.`;
+    resultDisplay.className = "success";
+    if (global.inspectedAreas[area]==null) { global.inspectedAreas[area] = { status: "run", index: 1 } }
+    else { global.inspectedAreas[area].index++; }
+    successfulAction(global.allAreas[area], index, "inspect");
 
 }
 
@@ -434,47 +443,68 @@ function interactArea(index) {
         resultDisplay.innerHTML = `Can't use ${global.allItems[item].name} on ${global.allAreas[area].name}.`;
         resultDisplay.className = "failure";
     } else {
-        successfulAction(global.allInteracts[area][item], index);
+        successfulAction(global.allInteracts[area][item], index, "interact");
         resultDisplay.innerHTML = `Used ${global.allItems[item].name} on ${global.allAreas[area].name}.`;
         resultDisplay.className = "success";
     }
 }
 
-function successfulAction(line, index) {
+function successfulAction(line, commandsIndex, mode) {
     let theEnd = false;
+    let grantItems = true;
+
     if (line.dialogue!="") {
-        console.log(global.dialoguesBank);
-        global.currentTab = global.dialoguesBank[line.dialogue];
+        switch(mode) {
+            case "inspect":
+                grantItems = (global.inspectedAreas[line.id].index==1);
+                let listOfDialogues = line.dialogue.split("|");
+                if (global.inspectedAreas[line.id].index==listOfDialogues.length) {
+                    global.inspectedAreas[line.id].status = "end";
+                }
+
+                if(global.inspectedAreas[line.id].status=="end") {
+                    global.currentTab = global.dialoguesBank[listOfDialogues[listOfDialogues.length - 1]].cloneNode(true);
+                } else {
+                    global.currentTab = global.dialoguesBank[listOfDialogues[global.inspectedAreas[line.id].index - 1]];
+                }
+                break;
+            default:
+                global.currentTab = global.dialoguesBank[line.dialogue];
+                break;
+        }
         global.mainSection.appendChild(global.currentTab);
     }
 
-    if (line.itemsGranted!="") {
-        let itemsToGrant = line.itemsGranted.split("|");
-        theEnd = itemsToGrant.includes("exit");
-        global.itemsList = global.itemsList.concat(itemsToGrant);
+    if (grantItems) {
+        if (line.itemsGranted!="") {
+            let itemsToGrant = line.itemsGranted.split("|");
+            theEnd = itemsToGrant.includes("exit");
+            global.itemsList = global.itemsList.concat(itemsToGrant);
+        }
+
+        if (line.itemsRemoved!="") {
+            let itemsToRemove = line.itemsRemoved.split("|");
+            global.itemsList = global.itemsList.filter((item) => !itemsToRemove.includes(item));
+        }
+
+        if (line.areasGranted!="") {
+            let areasToGrant = line.areasGranted.split("|");
+            global.areasList = global.areasList.concat(areasToGrant);
+        }
+
+        if (line.areasRemoved!="") {
+            let areasToRemove = line.areasRemoved.split("|");
+            global.areasList = global.areasList.filter((item) => !areasToRemove.includes(item));
+        }
     }
 
-    if (line.itemsRemoved!="") {
-        let itemsToRemove = line.itemsRemoved.split("|");
-        global.itemsList = global.itemsList.filter((item) => !itemsToRemove.includes(item));
-    }
 
-    if (line.areasGranted!="") {
-        let areasToGrant = line.areasGranted.split("|");
-        global.areasList = global.areasList.concat(areasToGrant);
-    }
-
-    if (line.areasRemoved!="") {
-        let areasToRemove = line.areasRemoved.split("|");
-        global.areasList = global.areasList.filter((item) => !areasToRemove.includes(item));
-    }
-
-    if (index!=0) {
-        document.getElementById(`areaInspectSelector-${index}`) .disabled = true;
-        document.getElementById(`inspectButton-${index}`)       .disabled = true;
-        document.getElementById(`areaInteractSelector-${index}`).disabled = true;
-        document.getElementById(`itemInteractSelector-${index}`).disabled = true;
-        document.getElementById(`interactButton-${index}`)      .disabled = true;
+    if (commandsIndex!=0) {
+        document.getElementById(`areaInspectSelector-${commandsIndex}`) .disabled = true;
+        document.getElementById(`inspectButton-${commandsIndex}`)       .disabled = true;
+        document.getElementById(`areaInteractSelector-${commandsIndex}`).disabled = true;
+        document.getElementById(`itemInteractSelector-${commandsIndex}`).disabled = true;
+        document.getElementById(`interactButton-${commandsIndex}`)      .disabled = true;
     }
     global.currentCommandIndex += 1;
 
@@ -483,8 +513,8 @@ function successfulAction(line, index) {
             global.currentTab = document.createElement("table");
             global.mainSection.appendChild(global.currentTab);
         }
-        global.currentTab.appendChild(escapeRoomCommands(global.currentCommandIndex));
+        global.currentTab.appendChild(escapeRoomCommands(global.currentCommandIndex, (mode=="init")));
     } else {
-        global.mainSection.innerHTML += `<a href="https://ancilloy.github.io/Zeronpa/display.html${global.allItems.exit.name}"><button>Next part</button></a>`;
+        global.mainSection.innerHTML += `<a href="${global.allItems.exit.name}"><button>Next part</button></a>`;
     }
 }

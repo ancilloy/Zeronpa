@@ -275,17 +275,57 @@
                 background-color: #222;
             }
 
-            span.narration {
+            .narration {
                 color: chartreuse;
             }
 
-            span.agree {
+            .agree {
                 color: dodgerblue;
             }
 
-            span.weak {
+            .weak {
                 color: orange;
                 font-weight: bold;
+            }
+
+
+
+
+            .spoilerBlock {
+                border: 1px yellow solid;
+                background-color: rgb(22, 35, 22);
+                color: chartreuse;
+                font-size: 10px;
+
+                margin: 0 0 40px 0;
+                padding: 5px;
+
+                position: relative;
+            }
+
+            .spoilerBlock > p {
+                margin-top: 0;
+            }
+
+            .spoilerHidden {
+                height: 0;
+            }
+
+            .spoilerHidden > p {
+                visibility: hidden;
+            }
+
+            .spoilerHeader {
+                position: absolute;
+                cursor: pointer;
+                top: 100%;
+                left: 5px;
+                padding: 3px;
+
+                background-color: inherit;
+                border: inherit;
+                border-top-color: rgb(22, 35, 22);
+                border-radius: 0 0 3px 3px;
             }
 
 
@@ -416,8 +456,21 @@
                 }
             }
 
+            function spoil(id) {
+                let block  = document.getElementById(`spoilerBlock-${id}`);
+                let header = document.getElementById(`spoilerHeader-${id}`);
+
+                if (block.classList.contains("spoilerHidden")) {
+                    block.classList.remove("spoilerHidden");
+                    header.innerHTML = "Hide tutorial";
+                } else {
+                    block.classList.add("spoilerHidden");
+                    header.innerHTML = "Show tutorial";
+                }
+            }
+
             let urlParams = new URLSearchParams(window.location.search);
-            let script = urlParams.get("poke");
+            let script = urlParams.get("script");
             let eRoom = urlParams.get("eRoom");
             if      (script!=null) { readScriptName(script); }
             else if (eRoom !=null) { setupEscapeRoom(eRoom); }

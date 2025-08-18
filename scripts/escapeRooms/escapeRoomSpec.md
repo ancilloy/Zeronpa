@@ -19,6 +19,7 @@ The unique id of the item. Can't contain a vertical bar `|`, and can't be **exit
 ### name
 
 The name of the item, to be displayed.
+The name of **exit** is the url to go to the next part.
 
 ### description
 
@@ -37,22 +38,24 @@ The name of the area, to be displayed.
 ### dialogue
 
 The dialogue to be displayed when the player inspects this area.
+If subsequent inspections yield different dialogues, then every dialogue name must be put here, in order, separated by a vertical bar.
+(If n dialogues are given, the n-th inspection and evert subsequent one will give the last dialogue).
 
 ### itemsGranted
 
-The items the player obtains upon inspecting this area. If there are several, each must be separated by a vertical bar.
+The items the player obtains upon inspecting this area for the first time. If there are several, each must be separated by a vertical bar.
 
 ### itemsRemoved
 
-The items the player loses upon inspecting this area. If there are several, each must be separated by a vertical bar.
+The items the player loses upon inspecting this area for the first time. If there are several, each must be separated by a vertical bar.
 
 ### areasGranted
 
-The areas that become available upon inspecting this area. If there are several, each must be separated by a vertical bar.
+The areas that become available upon inspecting this area for the first time. If there are several, each must be separated by a vertical bar.
 
 ### areasRemoved
 
-The areas that become unavailable upon inspecting this area. If there are several, each must be separated by a vertical bar.
+The areas that become unavailable upon inspecting this area for the first time. If there are several, each must be separated by a vertical bar.
 
 ## interacts.csv
 ### areaId
