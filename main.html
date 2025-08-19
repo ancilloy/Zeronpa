@@ -1,3 +1,113 @@
-<h1>Hello world</h1>
+<html>
+    <head>
+        <title>Zeronpa - main page</title>
 
-<a href="display.html">We're working on something...</a>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+
+        <style>
+            body {
+                background-color: lightgray;
+                font-family: Helvetica, Arial, sans-serif;
+            }
+
+            h1 {
+                text-align: center;
+                font-family: "Russo One", sans-serif;
+                font-size: 40px;
+            }
+
+            h1 > p {
+                font-size: 20px;
+                font-weight: normal;
+                margin: 0;
+            }
+
+            h3 {
+                font-family: "Russo One", sans-serif;
+            }
+
+            .narration {
+                color: chartreuse;
+            }
+
+            .agree {
+                color: dodgerblue;
+            }
+
+            .weak {
+                color: orange;
+                font-weight: bold;
+            }
+
+
+            .chapter {
+                background-color: antiquewhite;
+                border: 1px solid black;
+                border-radius: 10px;
+                width: 50%;
+                margin: auto;
+            }
+
+            .chapter > h3 {
+                margin-left: 15px;
+            }
+
+            .chapter ul {
+                padding: 0;
+            }
+
+            .chapter a {
+                color: inherit;
+                text-decoration: inherit;
+
+                display: block;
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 5px;
+                list-style: none;
+                margin: auto;
+                margin-bottom: 15px;
+                width: 75%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            Zeronpa
+            <p>A Zero Escape fanganronpa</p>
+        </h1>
+
+        <h3>What is Zeronpa ?</h3>
+        <p>
+            Zeronpa is a story centered on characters from the <span class="weak">Zero Escape</span> game series (specifically the first
+            two games : 999 and Virtue's Last Reward), going through a <span class="weak">Danganronpa</span>-inspired killing game.
+            The rules are simple : every character is locked away in a strange facility, and the only way for them to escape is to commit
+            a murder and get away with it. After a murder has occured, participants will be given some time to investigate, then a trial
+            will take place, to try to unmask the murderer. If the murderer is identified, they will be executed. But if the others fail to
+            identify the murderer, they will be allowed to leave the facility, while everyone else will be executed.
+        </p>
+
+        <p>
+            Before you start reading, <span class="weak">it is highly recommended to have played the first two Zero Escape games (999 and
+            VLR)</span>, as there will be major spoilers for both games, even in the beginning. The third Zero Escape game, Zero Time Dilemma,
+            isn't required though, and neither are any Danganronpa games.
+        </p>
+
+        <div class="chapter">
+            <h3>Prologue</h3>
+            <a href="display.html?script=test">Test script</a>
+            <a href="display.html?eRoom=test">Test escape room</a>
+            <a href="display.html">You lost the game</a>
+        </div>
+
+        <p>
+            Zeronpa was created and written by Sylvelouise. Danganronpa and Zero Escape belong to Spike Chunsoft. Every visual asset
+            used on this website come from 999 and VLR (with a few exceptions). Musics used come from Danganronpa, Zero Escape, and various
+            other similar games (when a music plays, you can find its source in the side menu).<br>
+            The website was created by Sylvelouise. If you have a bug to report, you can do it on
+            <a href="https://github.com/ancilloy/Zeronpa">Github</a>.
+        </p>
+    </body>
+</html>
