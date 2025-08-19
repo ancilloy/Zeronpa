@@ -19,14 +19,12 @@ Every character has a directory of their name in the `portraits` directory, cont
 The name of the portrait the character will be using for this line. It must match the name of a portrait in the character's `portraits`
 folder, minus the .png. Basically, it means that `portraits/{character}/{portrait}.png` must exist in the remote repository, and this is the portrait that will be displayed.<br>
 If this cell's content is **none**, then an empty portrait will be displayed (`portraits/none/stand.png`). This also means that if one of the character's portraits is named `none.png`, it can never be used.<br>
-This cell can be empty, in which case the character's default portrait will be used (the one named `stand.png` in their folder).
+This cell can be empty, in which case the character's default portrait will be used (the one named `stand.png` in their folder).<br>
 
-### name
-
-The name that will be displayed under the portrait for this line.<br>
-If this cell is empty, the character's default name will be displayed. Characters' default names are defined as follows :
+The name of the character will be displayed below the portrait :
 - At the very beginning of `display.js`, a list of default names are defined. If the character has an entry in this list, then their name here will be displayed.
 - Otherwise, the character's default name is just their in-code name, but with a capital letter at the beginning.
+- Using the command **renameChar**, you can temporairly rename a character.
 
 ### text
 
@@ -58,6 +56,10 @@ Marks the end of the last dialogue started with beginDialogue.
 ### music (musicName)
 
 Inserts music in the next dialogue line. When said dialogue line will become fully visible, the current music playing will be replaced by `musics/{musicName}.mp3`. The details of the music, as noted in `musics/musicnames.csv`, will also be displayed in the side menu.
+
+### renameChar (character|newName)
+
+Changes the displayed name of a character with newName for every subsequent dialogue line.
 
 ### decor (decorName)
 

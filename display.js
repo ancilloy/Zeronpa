@@ -144,7 +144,7 @@ async function readScriptPath(scriptPath) {
             if (line.character=="cmd") { // First column : if cmd, indicated it is a special command.
                 switch(line.portrait) { // Second column : command name
                     case "decor":
-                        let decorName = line.name; // Third column : command argument (here, name of the decor to display)
+                        let decorName = line.text; // Third column : command argument (here, name of the decor to display)
                         let decor = document.createElement("div");
                         decor.className = "decor";
                         decor.innerHTML = `<img src="https://ancilloy.github.io/Zeronpa/decors/${decorName}.png">`;
@@ -153,7 +153,7 @@ async function readScriptPath(scriptPath) {
                     case "beginDialogue":
                         state.currentTab = document.createElement("table");
                         state.currentTab.className = "content";
-                        state.dialogueName = line.name; // Third column : command argument (here, name of the dialogue)
+                        state.dialogueName = line.text; // Third column : command argument (here, name of the dialogue)
                         state.readingDialogue = true;
                         break;
                     case "endDialogue":
@@ -167,7 +167,11 @@ async function readScriptPath(scriptPath) {
                         state.dialogueName = null;
                         break;
                     case "music":
-                        state.music = line.name; // Third column : command argument (here, name of the dialogue)
+                        state.music = line.text; // Third column : command argument (here, name of the dialogue)
+                        break;
+                    case "renameChar":
+                        let renameSplit = line.text.split('|'); // Third column : command argument (here, name of the character and their new display name, separated by a |)
+                        global.basenames[renameSplit[0]] = renameSplit[1];
                         break;
                     default: // Unknown command.
                         console.log(`----- Error ! Unrecognized command ${line.portrait} :`);
@@ -199,7 +203,7 @@ function readDialogueLine(line) {
     // If a character has a special name for that line, it will be displayed.
     // If not, their base name will be displayed. For most characters, it is just their name in-code but with a capital.
     // Some other characters have special base names, listed at the beginning of this file (example : zero -> Zero III)
-    let name = (line.name!="") ? line.name : ( global.basenames[line.character]!=null ? global.basenames[line.character] : capitalize(line.character) );
+    let name = global.basenames[line.character]!=null ? global.basenames[line.character] : capitalize(line.character);
 
     let portrait = (line.portrait!="") ? line.portrait : "stand"; // stand.png is the default portrait for each character.
     let imgPath = (portrait=="none") ? "https://ancilloy.github.io/Zeronpa/portraits/none/stand.png" : `https://ancilloy.github.io/Zeronpa/portraits/${line.character}/${portrait}.png`;
