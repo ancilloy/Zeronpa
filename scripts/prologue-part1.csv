@@ -10,6 +10,7 @@ none,,"|Wait, hold on. Where am I even?|"
 cmd,endDialogue,
 
 cmd,decor,roomBed_dark
+cmd,renameChar,santa|Aoi
 cmd,beginDialogue,
 santa,shock,|Huh ? I can’t see a thing. The lights are off…|
 santa,shock,"|Except… near me, there’s a bit of light, for some reason.|"
@@ -38,3 +39,5 @@ santa,surprise,What ?
 tenmyouji,walkie,There's a writing on the wall here : it says the collar will progressively tighten up.
 santa,shock,Seriously !? Then that means... we must leave this place quickly !
 cmd,endDialogue,
+
+cmd,nextPart,display.html?eRoom=prologue

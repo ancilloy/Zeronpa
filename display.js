@@ -175,6 +175,9 @@ async function readScriptPath(scriptPath) {
                         let renameSplit = line.text.split('|'); // Third column : command argument (here, name of the character and their new display name, separated by a |)
                         global.basenames[renameSplit[0]] = renameSplit[1];
                         break;
+                    case "nextPart":
+                        linkNextPart(line.text); // Third column : command argument (here, link to the next part)
+                        break;
                     default: // Unknown command.
                         console.log(`----- Error ! Unrecognized command ${line.portrait} :`);
                         console.log(line);
@@ -254,6 +257,13 @@ function parseColors(text) {
 
     ret.text = text3;
     return ret;
+}
+
+function linkNextPart(link) {
+    let next = document.createElement("a");
+    next.innerHTML = "<button>Next part</button>";
+    next.href = link;
+    global.mainSection.appendChild(next);
 }
 
 
@@ -521,6 +531,6 @@ function successfulAction(line, commandsIndex, mode) {
         }
         global.currentTab.appendChild(escapeRoomCommands(global.currentCommandIndex, (mode=="init")));
     } else {
-        global.mainSection.innerHTML += `<a href="${global.allItems.exit.name}"><button>Next part</button></a>`;
+        linkNextPart(global.allItems.exit.name);
     }
 }
