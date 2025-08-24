@@ -1,4 +1,49 @@
 id,name
 4_33,none
-binary_game,Binary Game – Zero Escape 999 OST (Shinji Hosoe)
-digital_root,Digital Root – Zero Escape 999 OST (Shinji Hosoe)
+
+======,Chill
+extremeExtrication,Extreme Extrication – Zero Escape 999 OST (Shinji Hosoe)
+foreboding,Foreboding – Zero Escape 999 OST (Shinji Hosoe)
+imaginary,Imaginary – Zero Escape 999 OST (Shinji Hosoe)
+placidity,Placidity – Zero Escape VLR OST (Shinji Hosoe)
+ternaryGame,Ternary Game – Zero Escape 999 OST (Shinji Hosoe)
+septenaryGame,Septenary Game – Zero Escape 999 OST (Shinji Hosoe)
+tranquility,Tranquility – Zero Escape 999 OST (Shinji Hosoe)
+
+======,Mystery
+binaryGame,Binary Game – Zero Escape 999 OST (Shinji Hosoe)
+digitalRoot,Digital Root – Zero Escape 999 OST (Shinji Hosoe)
+clarification,Clarification – Zero Escape VLR OST (Shinji Hosoe)
+
+======,Unease
+anxiousness,Anxiousness – Zero Escape VLR OST (Shinji Hosoe)
+portentousness,Portentousness – Zero Escape VLR OST (Shinji Hosoe)
+riddleAndPuzzle,Riddle and Puzzle – Zero Escape 999 OST (Shinji Hosoe)
+sinisterness,Sinisterness – Zero Escape VLR OST (Shinji Hosoe)
+whoIsZero,Who is Zero? – Zero Escape 999 OST (Shinji Hosoe)
+
+======,Tense
+consternation,Consternation – Zero Escape VLR OST (Shinji Hosoe)
+pantry,Pantry – Zero Escape VLR OST (Shinji Hosoe)
+strain,Strain – Zero Escape 999 OST (Shinji Hosoe)
+tinderbox,Tinderbox – Zero Escape 999 OST (Shinji Hosoe)
+trepidation,Trepidation – Zero Escape 999 OST (Shinji Hosoe)
+
+======,Sad
+blueBirdLamentation,Blue Bird Lamentation – Zero Escape VLR OST (Shinji Hosoe)
+confession,Confession – Zero Escape VLR OST (Shinji Hosoe)
+morphogeneticSorrow,Morphogenetic Sorrow – Zero Escape 999 OST (Shinji Hosoe)
+recollection,Recollection – Zero Escape 999 OST (Shinji Hosoe)
+
+======,Tragedy
+chillAndRigor,Chill and Rigor – Zero Escape 999 OST (Shinji Hosoe)
+demise,Demise – Zero Escape VLR OST (Shinji Hosoe)
+quietus,Quietus – Zero Escape 999 OST (Shinji Hosoe)
+
+======,Investigation
+ikoroshia,Ikoroshia / Homicide - Super Danganronpa 2 OST (Masafumi Takada)
+
+======,Class Trial
+aa_pursuit2007,Apollo Justice: Ace Attorney OST - Pursuit - Gotta Corner the Culprit (Hideki Okugawa)
+eg_trialAdvance,Project: Eden's Garden OST - Class Trial - Advance (Hayden Graves)
+eg_caseClosed,Project: Eden's Garden OST - Case Closed (Hayden Graves)

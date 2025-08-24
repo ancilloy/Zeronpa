@@ -1,6 +1,6 @@
 character,portrait,text
 cmd,beginDialogue,initDialogue
-cmd,music,binary_game
+cmd,music,binaryGame
 santa,surprise,Huh ? Where the hell are we ?
 june,uneasy,No idea… I don’t even remember how we got here.
 june,wonder,There's not even a door. How are we gonna get out of here ?

@@ -33,7 +33,9 @@ papaParseAsync(`https://ancilloy.github.io/Zeronpa/musics/musicnames.csv`, { dow
         console.log(res);
     } else {
         let line = res.data;
-        global.musicNames[line.id] = line.name;
+        if (line.id!="======") {
+            global.musicNames[line.id] = line.name;
+        }
     }
 } });
 

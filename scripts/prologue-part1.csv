@@ -1,0 +1,40 @@
+character,portrait,text
+cmd,renameChar,santa|???
+cmd,renameChar,tenmyouji|???
+
+cmd,beginDialogue,
+none,,|…|
+none,,|Argh… my head hurts…|
+none,,|No… not just my head. My neck is sore too…|
+none,,"|Wait, hold on. Where am I even?|"
+cmd,endDialogue,
+
+cmd,decor,roomBed_dark
+cmd,beginDialogue,
+santa,shock,|Huh ? I can’t see a thing. The lights are off…|
+santa,shock,"|Except… near me, there’s a bit of light, for some reason.|"
+santa,wonder,|Let’s see… I’m sitting on some kind of bed. I should probably just…|
+santa,shock,"|Wait, what?|"
+cmd,music,tinderbox
+santa,uneasy,|I’m stuck ! There’s something sturdy around my neck keeping it against the wall!|
+santa,uneasy,Urgh ! What the heck !?
+santa,uneasy,"|Instinctively, I start struggling to try getting it off. But I’m quickly interrupted by a voice.|"
+tenmyouji,none,"Will you stop doing this, imbecile !?"
+santa,uneasy,Huh ? Who said that ?
+santa,uneasy,"|I stop struggling, and look around, in the direction this voice was coming from, and finally notice something in the dark. Standing on a table near me was a walkie-talkie. There was a small, flickering red light on it.|"
+santa,serious,"You’re talking to me through this walkie-talkie, aren’t you ?"
+tenmyouji,walkie,"Indeed, I am."
+santa,uneasy,"So, you’re the bastard that kidnapped me and locked me in here ?"
+tenmyouji,walkie,"No, I’m not. I was also kidnapped and locked in here, for your information."
+santa,surprise,|Huh?|
+tenmyouji,walkie,"In fact, I believe we’re in the same situation. Are you sitting on a bed, in some kind of ship cabin, with an iron collar pinning you against the wall ?"
+santa,shock,"Uh… yeah, that’s pretty much it."
+tenmyouji,walkie,"Well, it’s exactly the same for me. And when you started struggling like an idiot, my collar started shaking and tightening around my neck."
+santa,surprise,"Oh… so, are our collars connected somehow ?"
+tenmyouji,walkie,It would seem like it…
+santa,wonder,In that case... we should be careful not to fiddle too much with our collars.
+tenmyouji,walkie,"Indeed... and there's something else, too."
+santa,surprise,What ?
+tenmyouji,walkie,There's a writing on the wall here : it says the collar will progressively tighten up.
+santa,shock,Seriously !? Then that means... we must leave this place quickly !
+cmd,endDialogue,
